@@ -4,6 +4,7 @@ import { StorageService } from '../../services/storage.service';
 import { ClienteDTO } from '../../models/cliente.dto';
 import { ClienteService } from '../../services/domain/cliente.service';
 import { API_CONFIG } from '../../config/api.config';
+import { isRightSide } from 'ionic-angular/umd/util/util';
 
 @IonicPage()
 @Component({
@@ -29,7 +30,14 @@ export class ProfilePage {
           this.cliente = response;
           this.getImageIfExists();
         },
-        error => {});
+        error => {
+          if (error.status == 403){
+            this.navCtrl.setRoot('HomePage'); // redirecionar para pagina de HOme
+          }
+        });
+    }
+    else{
+      this.navCtrl.setRoot('HomePage');
     }
   }
 
