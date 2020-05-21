@@ -20,7 +20,11 @@ export class ProdutosPage {
     public loadingCtrl : LoadingController ) {
   }
 
-  ionViewDidLoad() {
+    ionViewDidLoad() {
+      this.loadData();
+    }
+
+    loadData(){
     let categoria_id = this.navParams.get('categoria_id'); // pegar atributo que foi passa na navegação da page de categoria
     let loader = this.presentLoading();
     this.produtoService.findByCategoria(categoria_id).subscribe(response => {
@@ -54,6 +58,13 @@ export class ProdutosPage {
       });
       loader.present();
       return loader;
+    }
+
+    doRefresh(refresher) {
+      this.loadData();
+      setTimeout(() => {
+        refresher.complete();
+      }, 1000);
     }
 
   }
